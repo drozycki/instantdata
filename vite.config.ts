@@ -10,4 +10,11 @@ export default defineConfig({
 		sveltekit(),
 		tailwindcss(),
 	],
+	worker : {
+		plugins: () => [sveltekit()],
+		format: "es",
+	},
+	build: {
+		target: "ES2022",
+	},
 });
