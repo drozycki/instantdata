@@ -8,7 +8,9 @@ const config = {
 	preprocess: vitePreprocess(),
 
 	kit: {
-		adapter: adapter(),
+		adapter: adapter({
+			precompress: true
+		}),
 		paths: {
 			base: process.env.NODE_ENV === 'production' ? '/instantdata' : '',
 		}

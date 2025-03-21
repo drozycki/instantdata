@@ -9,7 +9,7 @@
   <input class="bg-white p-1 border-t-1 w-screen" bind:this={input} type="text" placeholder="Enter SQL query" />
 </form>
 <script>
-	import { onMount, onDestroy, tick } from 'svelte';
+  import { onMount, onDestroy, tick } from 'svelte';
 
   let worker, form, input, history = [], inputHistoryPosition = -1, savedInput = '';
 
