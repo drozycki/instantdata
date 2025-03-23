@@ -36,26 +36,24 @@
   }
 
   onMount(async () => {
-    if (window?.Worker) {
-      const SqliteWorker = await import('$lib/sqliteWorker?worker');
-      worker = new SqliteWorker.default();
-      worker.onmessage = async e => {
-        if (e.data === 'ready') {
-          input.value = 'SELECT * FROM sqlite_schema;';
-          form.requestSubmit();
-        } else if (e.data) {
-          history.push({
-            query: input.value,
-            result: e.data
-          });
-          history = history;
-          input.value = '';
-          await tick();
-          window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' });
-          input.disabled = false;
-        }
-      };
-    }
+    const SqliteWorker = (await import('$lib/sqliteWorker?worker')).default;
+    worker = new SqliteWorker();
+    worker.onmessage = async e => {
+      if (e.data === 'ready') {
+        input.value = 'SELECT * FROM sqlite_schema;';
+        form.requestSubmit();
+      } else {
+        history.push({
+          query: input.value,
+          result: e.data
+        });
+        history = history;
+        input.value = '';
+        await tick();
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' });
+        input.disabled = false;
+      }
+    };
   });
 
   onDestroy(() => worker?.terminate());
